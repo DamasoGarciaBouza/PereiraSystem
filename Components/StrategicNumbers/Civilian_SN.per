@@ -185,15 +185,15 @@
     (disable-self)
 )
 
-(defrule
-    (current-age == imperial-age)
-=>
-    (set-strategic-number sn-percent-civilian-explorers 0)
-    (set-strategic-number sn-percent-civilian-builders 15)
-    (set-strategic-number sn-percent-civilian-gatherers 85)
-    (set-strategic-number sn-cap-civilian-builders 12)
-    (disable-self)
-)
+;(defrule
+;    (current-age == imperial-age)
+;=>
+;    (set-strategic-number sn-percent-civilian-explorers 0)
+;    (set-strategic-number sn-percent-civilian-builders 15)
+;    (set-strategic-number sn-percent-civilian-gatherers 85)
+;    (set-strategic-number sn-cap-civilian-builders 12)
+;    (disable-self)
+;)
 
 ; PERCENT GATHERERS AND DROP DISTANCES
 (defrule
@@ -240,7 +240,7 @@
 =>
 
     (set-strategic-number sn-maximum-hunt-drop-distance 0)
-    (disable-self)
+
 )
 
 (defrule
@@ -251,10 +251,6 @@
     (set-strategic-number sn-gold-gatherer-percentage 8)
     (set-strategic-number sn-stone-gatherer-percentage 4)
     (set-strategic-number sn-maximum-stone-drop-distance 9)
-    (chat-local-to-self "STONE MINING AVAILABLE????")
-    (up-chat-data-to-self "WOOD GATHER PERCENT: %d : %d" s: sn-wood-gatherer-percentage)
-    (up-chat-data-to-self "FOOD GATHER PERCENT: %d : %d" s: sn-food-gatherer-percentage)  
-    (disable-self)
 )
 
 (defrule
@@ -264,10 +260,7 @@
     (set-strategic-number sn-wood-gatherer-percentage 14)
     (set-strategic-number sn-gold-gatherer-percentage 6)
     (set-strategic-number sn-stone-gatherer-percentage 6)
-    (chat-local-to-self  "Imperial Age With No Relics - Sending More Villagers For Gold")
-    (up-chat-data-to-self "WOOD GATHER PERCENT: %d" s: sn-wood-gatherer-percentage)
-    (up-chat-data-to-self "FOOD GATHER PERCENT: %d" s: sn-food-gatherer-percentage)  
-    (disable-self)
+
 )
 
 (defrule
@@ -277,10 +270,6 @@
     (set-strategic-number sn-wood-gatherer-percentage 14)
     (set-strategic-number sn-gold-gatherer-percentage 2)
     (set-strategic-number sn-stone-gatherer-percentage 6)
-    (chat-local-to-self "Imperial Age With All Relics - Sending Less Villagers For Gold")
-    (up-chat-data-to-self "WOOD GATHER PERCENT: %d" s: sn-wood-gatherer-percentage)
-    (up-chat-data-to-self "FOOD GATHER PERCENT: %d" s: sn-food-gatherer-percentage)  
-    (disable-self)
 )
 
 
@@ -301,4 +290,12 @@
     (wood-amount g:> minimumWoodForLC)
 =>
     (set-strategic-number sn-maximum-wood-drop-distance 6)
+)
+
+
+(defrule
+    (current-age == imperial-age)
+=>
+    (set-strategic-number sn-maximum-food-drop-distance 20)
+    (disable-self)
 )

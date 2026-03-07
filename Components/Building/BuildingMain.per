@@ -1,3 +1,23 @@
+;PROBANDO SI SE SATURA EL SCRIPT - EMERGENCY FARMS - HIGHEST PRIORITY
+
+(defrule
+    (current-age >= castle-age)
+    (building-type-count-total farm == 0)
+    (can-build farm)
+=>
+    (build farm)
+    (chat-local-to-self "EMERGENCY - 0 FARMS!")
+)
+
+(defrule
+    (current-age == imperial-age)
+    (building-type-count-total farm < 3)
+    (can-build farm)
+=>
+    (build farm)
+    (chat-local-to-self "EMERGENCY - LOW FARMS!")
+)
+
 ; CASTLE
 (defrule(false)
     (can-build castle)

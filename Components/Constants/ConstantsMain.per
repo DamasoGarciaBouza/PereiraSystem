@@ -112,6 +112,26 @@
   (disable-self)
 )
 
+(defrule
+  (current-age == feudal-age)
+  =>
+  (set-goal populationRoomBeforeBuildingHouses 6)
+  (disable-self)
+)
+
+(defrule
+  (current-age == castle-age)
+  =>
+  (set-goal populationRoomBeforeBuildingHouses 9)
+  (disable-self)
+)
+
+(defrule
+  (current-age == imperial-age)
+  =>
+  (set-goal populationRoomBeforeBuildingHouses 14)
+  (disable-self)
+)
 
 ; MIN ATTACK GP SIZE - 20
 (defrule
