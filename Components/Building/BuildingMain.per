@@ -379,6 +379,17 @@
     ;(up-chat-data-to-player my-player-number "Wood > %d" g: minimumWoodForLC)
 )
 
+(defrule
+
+    (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
+    (and(housing-headroom g:<  populationRoomBeforeBuildingHouses)(population-headroom > 0))
+    (can-build house)
+=>
+    (chat-local-to-self "Trying To Build House - Normal")
+    (build house)
+    ;(up-chat-data-to-player my-player-number "Wood > %d" g: minimumWoodForLC)
+)
+
 ; LUMBER CAMP
 (defrule
     (building-type-count-total lumber-camp g:< maxLumberCampsQty)
