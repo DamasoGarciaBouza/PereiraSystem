@@ -1,0 +1,51 @@
+; PEREIRA SYSTEM AI - AGE OF EMPIRES II DEFINITIVE
+
+; CONSTANTS - 7 FILES
+(load "Components/Constants/ConstantsMain");1 to 50
+(load "Components/Constants/ConstantsCivCharacteristics");50 to 70
+(load "Components/Constants/ConstantsFacts");70 to 120
+(load "Components/Constants/ConstantsBuilding");120 to 170
+(load "Components/Constants/ConstantsCosts");300 to 350
+(load "Components/Constants/ConstantsDetecting");350 to 380
+(load "Components/Constants/ConstantsTraining");380 to 512
+
+; STRATEGIC NUMBERS - 2 FILES
+(load "Components/StrategicNumbers/Civilian_SN")
+(load "Components/StrategicNumbers/Exploring_SN")
+(load "Components/StrategicNumbers/Military_SN")
+
+; GAME VARIABLES (MAP TYPE, DIFFICULTY - (MAP SIZE IN BUILDING WALL SECTION))
+(load "Components/GameVariables/Difficulty")
+
+; BUILDING ACTIONS - 2 FILES
+(load "Components/Building/BuildingMain")
+(load "Components/Building/BuildingWall")
+
+; OTHER IMPORTANT ACTIONS - 4 FILES
+(load "Components/Detecting")
+(load "Components/Training")
+(load "Components/Researching")
+(load "Components/Trade")
+
+
+; TIMERS -2 FILES
+(load "Components/Timers/Timers_civilian")
+(load "Components/Timers/Timers_military")
+
+; OTHER - 3 FILES
+; PLAYER NAMES, TAUNTS
+(load "Components/PlayerNames")
+(load "Components/TauntsA_Emission")
+(load "Components/TauntsB_Response")
+(load "Components/Testing")
+
+
+; I use the cheat for making things faster sometimes
+(defrule (true)
+    (cheats-enabled)
+=>
+    (up-cc-send-cheat "AEGIS")
+    (disable-self)
+)
+
+
