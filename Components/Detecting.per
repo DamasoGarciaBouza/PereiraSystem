@@ -1,5 +1,10 @@
-; RESEARCHING -------------------------------------------------------
-;(defrule(true)=>(chat-local-to-self "> 7. Detecting Loaded")(disable-self))
+; DETECTING - PEREIRA SYSTEM AI
+; ============================================================
+
+; ============================================================
+; CAVALRY
+; ============================================================
+
 (defrule
     (or
         (or
@@ -25,8 +30,8 @@
     )
 =>
     (set-goal dudeHasCavalry 1)
-    ;(chat-local-to-self "DUDE HAS CAVALRY!")
 )
+
 (defrule
     (or
         (or
@@ -52,8 +57,8 @@
     )
 =>
     (set-goal dudeHasCavalry 1)
-    ;(chat-local-to-self "DUDE HAS CAVALRY!")
 )
+
 (defrule
     (players-unit-type-count every-enemy scout-cavalry-line < 2)
     (players-unit-type-count every-enemy knight-line < 2)
@@ -74,103 +79,185 @@
 =>
     (set-goal dudeHasCavalry 0)
 )
+
+
+; ============================================================
+; ELEPHANTS
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy battle-elephant-line > 0)
 =>
-    (do-nothing)
-    ;(chat-local-to-self "DUDE HAS ELEPHANTS!")
+    (set-goal dudeHasElephants 1)
 )
+
+(defrule
+    (players-unit-type-count every-enemy battle-elephant-line == 0)
+=>
+    (set-goal dudeHasElephants 0)
+)
+
+
+; ============================================================
+; SKIRMISHERS
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy skirmisher-line > 6)
 =>
     (set-goal dudeHasSkirmishers 1)
-    ;(chat-local-to-self "DUDE HAS SKIRMISHERS!")
 )
+
 (defrule
     (players-unit-type-count every-enemy skirmisher-line < 1)
 =>
     (set-goal dudeHasSkirmishers 0)
 )
+
+
+; ============================================================
+; ARCHERS
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy archer-line > 6)
 =>
     (set-goal dudeHasArchers 1)
-    ;(chat-local-to-self "DUDE HAS ARCHERS!")
 )
-(defrule
-    (players-unit-type-count every-enemy cavalry-archer-line < 6); enough to justify mangonel
-=>
-    (set-goal dudeHasCavalryArchers 0)
-)
-(defrule
-    (players-unit-type-count any-enemy cavalry-archer-line > 6)
-=>
-    (set-goal dudeHasCavalryArchers 1)
-    ;(chat-local-to-self "DUDE HAS CAVALRY ARCHERS!")
-)
+
 (defrule
     (players-unit-type-count every-enemy archer-line < 1)
 =>
     (set-goal dudeHasArchers 0)
 )
+
+
+; ============================================================
+; CAVALRY ARCHERS
+; ============================================================
+
+(defrule
+    (players-unit-type-count any-enemy cavalry-archer-line > 6)
+=>
+    (set-goal dudeHasCavalryArchers 1)
+)
+
+(defrule
+    (players-unit-type-count every-enemy cavalry-archer-line < 6)
+=>
+    (set-goal dudeHasCavalryArchers 0)
+)
+
+
+; ============================================================
+; SPEARMEN
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy spearman-line > 0)
 =>
     (set-goal dudeHasSpearmen 1)
-    ;(chat-local-to-self "DUDE HAS SPEARMEN!")
 )
+
 (defrule
     (players-unit-type-count every-enemy spearman-line < 1)
 =>
     (set-goal dudeHasSpearmen 0)
 )
+
+
+; ============================================================
+; MILITIA
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy militiaman-line > 0)
 =>
     (set-goal dudeHasMilitia 1)
-    ;(chat-local-to-self "DUDE HAS MILITIA!")
 )
+
 (defrule
     (players-unit-type-count every-enemy militiaman-line < 1)
 =>
     (set-goal dudeHasMilitia 0)
 )
-; DETECTING SHIPS
+
+
+; ============================================================
+; SIEGE WEAPONS
+; ============================================================
+
+(defrule
+    (or
+        (or
+            (players-unit-type-count any-enemy mangonel-line > 0)
+            (players-unit-type-count any-enemy scorpion-line > 0)
+        )
+        (or
+            (players-unit-type-count any-enemy battering-ram-line > 0)
+            (players-unit-type-count any-enemy bombard-cannon-line > 0)
+        )
+    )
+=>
+    (set-goal dudeHasSiegeWeapons 1)
+)
+
+(defrule
+    (players-unit-type-count every-enemy mangonel-line == 0)
+    (players-unit-type-count every-enemy scorpion-line == 0)
+    (players-unit-type-count every-enemy battering-ram-line == 0)
+    (players-unit-type-count every-enemy bombard-cannon-line == 0)
+=>
+    (set-goal dudeHasSiegeWeapons 0)
+)
+
+
+; ============================================================
+; SHIPS
+; ============================================================
+
 (defrule
     (players-unit-type-count any-enemy galley-line > 0)
 =>
     (set-goal dudeHasGalleys 1)
 )
+
 (defrule
     (players-unit-type-count every-enemy galley-line == 0)
 =>
     (set-goal dudeHasGalleys 0)
 )
+
 (defrule
     (players-unit-type-count any-enemy cannon-galleon-line > 0)
 =>
     (set-goal dudeHasCannonShips 1)
 )
+
 (defrule
     (players-unit-type-count every-enemy cannon-galleon-line == 0)
 =>
     (set-goal dudeHasCannonShips 0)
 )
+
 (defrule
     (players-unit-type-count any-enemy fire-ship-line > 0)
 =>
     (set-goal dudeHasFireShips 1)
 )
+
 (defrule
     (players-unit-type-count every-enemy fire-ship-line == 0)
 =>
     (set-goal dudeHasFireShips 0)
 )
+
 (defrule
     (players-unit-type-count any-enemy demolition-ship-line > 0)
 =>
     (set-goal dudeHasExplosiveShips 1)
 )
+
 (defrule
     (players-unit-type-count every-enemy demolition-ship-line == 0)
 =>
