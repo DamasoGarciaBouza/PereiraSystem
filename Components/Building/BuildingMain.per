@@ -344,22 +344,6 @@
 =>
     (build farm)
     (up-chat-data-to-self "IMPERIAL FARM BUILT - maxCiviliansImperialAge: %d" g: maxCiviliansImperialAge)
-    (up-chat-data-to-self "IMPERIAL FARM BUILT - farms total: %d" s: sn-maximum-farm-count)
-)
-
-(defrule
-    (current-age == imperial-age)
-    (not (can-build farm))
-=>
-    (up-chat-data-to-self "CANNOT BUILD FARM - maxCiviliansImperialAge: %d" g: maxCiviliansImperialAge)
-)
-
-(defrule
-    (current-age == imperial-age)
-    (building-type-count-total farm g:>= maxCiviliansImperialAge)
-=>
-    (up-chat-data-to-self "FARM CAP REACHED - farms: %d" g: maxCiviliansImperialAge)
-    (disable-self)
 )
 
 ; HOUSES
