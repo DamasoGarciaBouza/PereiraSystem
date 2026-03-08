@@ -75,6 +75,7 @@
 (defrule
     (unit-type-count villager > 40)
 =>
+    (up-assign-builders c: house c: 3)
     (up-assign-builders c: castle c: 8)
     (up-assign-builders c: watch-tower c: 3)
     (up-assign-builders c: guard-tower c: 3)
