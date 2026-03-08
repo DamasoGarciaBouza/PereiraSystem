@@ -150,7 +150,7 @@
     (building-type-count-total town-center == 1)
     (can-build town-center)
 =>    
-    (set-strategic-number sn-town-center-placement mining-camp)
+    (set-strategic-number sn-town-center-placement town-center)
     (chat-local-to-self "Trying To Build Town Center 2")
     (build town-center)
 )
@@ -160,7 +160,7 @@
     (building-type-count-total town-center == 2)
     (can-build town-center)
 =>
-    (set-strategic-number sn-town-center-placement lumber-camp)
+    (set-strategic-number sn-town-center-placement town-center)
     (chat-local-to-self "Trying To Build Town Center 3")
     (build town-center)
 )
@@ -345,7 +345,6 @@
     (can-build farm)
 =>
     (build farm)
-    (up-chat-data-to-self "IMPERIAL FARM BUILT - maxCiviliansImperialAge: %d" g: maxCiviliansImperialAge)
 )
 
 ; HOUSES
