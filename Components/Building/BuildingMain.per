@@ -15,15 +15,6 @@
     (can-build farm)
 =>
     (build farm)
-    (chat-local-to-self "EMERGENCY - VERY LOW FARMS!")
-)
-
-(defrule
-    (current-age == imperial-age)
-    (building-type-count-total farm < 15)
-    (can-build farm)
-=>
-    (build farm)
     (chat-local-to-self "EMERGENCY - LOW FARMS!")
 )
 
@@ -74,8 +65,8 @@
     (chat-local-to-self "Trying To Build Castle (Normal)")
 )
 
-; CASTLE FORWARD - DISABLED
-(defrule(false)
+; CASTLE FORWARD
+(defrule
     (goal weAreAttacking 1)
     (building-type-count-total castle >= 3)
     (not
@@ -104,8 +95,8 @@
     (up-build place-control 0 c: castle)
 )
 
-; KREPOST FORWARD - DISABLED
-(defrule(false)
+; KREPOST FORWARD
+(defrule
     (goal weAreAttacking 1)
     (building-type-count-total castle > 2)
     (can-build krepost)
@@ -114,9 +105,8 @@
     (build-forward krepost)
 )
 
-
-; DONJON FORWARD - DISABLED
-(defrule(false)
+; DONJON FORWARD
+(defrule
     (goal weAreAttacking 1)
     (building-type-count-total castle > 2)
     (can-build donjon)
@@ -475,7 +465,7 @@
     (up-build place-control 0 c: blacksmith)
 )
 
-; MARKET - solo el primero activo
+; MARKET
 (defrule
     (up-players-in-game ally == 1)
     (building-type-count town-center > 0)
@@ -511,8 +501,8 @@
     (up-build place-control 0 c: market)
 )
 
-; MARKET 2 - DISABLED
-(defrule(false)
+; MARKET 2
+(defrule
     (current-age == imperial-age)
     (up-players-in-game ally > 1)
     (building-type-count town-center > 1)
@@ -524,8 +514,8 @@
     (up-build place-control 0 c: market)
 )
 
-; CARAVANSERAI - DISABLED
-(defrule(false)
+; CARAVANSERAI
+(defrule
     (current-age == imperial-age)
     (up-players-in-game ally > 1)
     (building-type-count town-center > 1)
@@ -778,15 +768,15 @@
     (build barracks)
 )
 
-; BARRACKS INFANTRY SPAM FORWARD - DISABLED
-(defrule(false)
+; BARRACKS INFANTRY SPAM FORWARD
+(defrule
     (current-age == imperial-age)
     (or(civ-selected burmese)(civ-selected burgundians))
     (up-compare-goal infantrySpam == 1)
     (building-type-count-total barracks < 8)
     (can-build barracks)
 =>
-    (chat-local-to-self "Trying To Build Barracks Infantry Spam")
+    (chat-local-to-self "Trying To Build Barracks Infantry Spam Forward")
     (build-forward barracks)
 )
 
@@ -810,8 +800,8 @@
     (up-build place-control 0 c: barracks)
 )
 
-; BARRACKS FORWARD - DISABLED
-(defrule(false)
+; BARRACKS FORWARD
+(defrule
     (building-type-count town-center > 0)
     (building-type-count-total barracks g:< barracksQty)
     (building-type-count-total barracks > 12)    
@@ -853,8 +843,8 @@
     (up-build place-control 0 c: stable)
 )
 
-; STABLE FORWARD - DISABLED
-(defrule(false)
+; STABLE FORWARD
+(defrule
     (or(wood-amount > 275)(building-type-count market > 0))
     (building-type-count lumber-camp > 0)
     (building-type-count-total stable g:< stableQty)
@@ -893,8 +883,8 @@
     (up-build place-control 0 c: archery-range)
 )
 
-; ARCHERY RANGE FORWARD - DISABLED
-(defrule(false)
+; ARCHERY RANGE FORWARD
+(defrule
     (building-type-count-total archery-range g:< archeryRangeQty)
     (building-type-count-total archery-range > 12) 
     (wood-amount > 275)
@@ -965,14 +955,14 @@
     (build siege-workshop)
 )
 
-; SIEGE WORKSHOP SCORPION SPAM FORWARD - DISABLED
-(defrule(false)
+; SIEGE WORKSHOP SCORPION SPAM FORWARD
+(defrule
     (current-age == imperial-age)
     (up-compare-goal scorpionsSpam == 1)
     (building-type-count-total siege-workshop < 8)
     (can-build siege-workshop)
 =>
-    (chat-local-to-self "Trying To Build Siege Workshop Scorpion Spam")
+    (chat-local-to-self "Trying To Build Siege Workshop Scorpion Spam Forward")
     (build-forward siege-workshop)
 )
 
@@ -995,8 +985,8 @@
     (up-build place-control 0 c: siege-workshop)
 )
 
-; SIEGE WORKSHOP FORWARD - DISABLED
-(defrule(false)
+; SIEGE WORKSHOP FORWARD
+(defrule
     (building-type-count town-center > 0)
     (building-type-count monastery > 0)
     (building-type-count-total siege-workshop g:< siegeWorkshopQty)
@@ -1009,7 +999,7 @@
     (can-build siege-workshop)
 =>
     (chat-local-to-self "Trying To Build Siege Workshop - Forward")
-    (build siege-workshop)
+    (build-forward siege-workshop)
 )
 
 ; MONASTERY
@@ -1045,8 +1035,8 @@
 )
 
 ; TOWERS
-; BOMBARD TOWER FORWARD - DISABLED
-(defrule(false)
+; BOMBARD TOWER FORWARD
+(defrule
     (up-compare-goal weAreAttacking == 1)
     (gold-amount > 301)
     (building-type-count-total castle > 2)
@@ -1080,8 +1070,8 @@
     (build bombard-tower)
 )
 
-; WATCH TOWER FORWARD - DISABLED
-(defrule(false)
+; WATCH TOWER FORWARD
+(defrule
     (up-compare-goal weAreAttacking == 1)
     (building-type-count-total castle > 2)
     (gold-amount > 301)
