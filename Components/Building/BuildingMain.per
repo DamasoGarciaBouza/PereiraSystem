@@ -15,6 +15,15 @@
     (can-build farm)
 =>
     (build farm)
+    (chat-local-to-self "EMERGENCY - VERY LOW FARMS!")
+)
+
+(defrule
+    (current-age == imperial-age)
+    (building-type-count-total farm < 15)
+    (can-build farm)
+=>
+    (build farm)
     (chat-local-to-self "EMERGENCY - LOW FARMS!")
 )
 
@@ -104,6 +113,7 @@
     (chat-to-player my-player-number "Trying To Build Krepost FORWARD!!!!!!!!!!!!" )
     (build-forward krepost)
 )
+
 
 ; DONJON FORWARD - DISABLED
 (defrule(false)

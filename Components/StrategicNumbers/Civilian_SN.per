@@ -309,11 +309,13 @@
     (wood-amount g:< minimumWoodForLC)
 =>
     (set-strategic-number sn-maximum-wood-drop-distance 40)
+    (chat-to-player my-player-number "LOW WOOD")
 )
 
 (defrule
     (current-age > dark-age)
     (wood-amount g:> minimumWoodForLC)
 =>
-    (set-strategic-number sn-maximum-wood-drop-distance 6)
+    (set-strategic-number sn-maximum-wood-drop-distance 5)
+    (chat-to-player my-player-number "ENOUGH WOOD")
 )

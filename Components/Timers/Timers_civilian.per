@@ -17,7 +17,7 @@
 	(timer-triggered 2)
 =>
 	(disable-timer 2)
-    (enable-timer 2 200)
+    (enable-timer 2 120)
     (up-modify-goal maxLumberCampsQty c:+ 1)
     ;(up-chat-data-to-self "Lumber camps max qty increased = %d" g: maxLumberCampsQty)
 )
@@ -44,7 +44,7 @@
 	(timer-triggered 4)
 =>
 	(disable-timer 4)
-    (enable-timer 4 100) 
+    (enable-timer 4 90) 
     (up-modify-sn sn-lumber-camp-max-distance g:+ lumberCampDistanceIncrement)
     (up-chat-data-to-self "Lumber camps max distance increased = %d" s: sn-lumber-camp-max-distance)
 )
