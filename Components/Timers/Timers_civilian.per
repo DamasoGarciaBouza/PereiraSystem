@@ -5,7 +5,7 @@
 	(timer-triggered 1)
 =>
 	(disable-timer 1)
-    (enable-timer 1 140)  ;120 before
+    (enable-timer 1 110)  ;120 before
     (up-modify-sn sn-maximum-town-size c:+ 1)
     (up-modify-sn sn-minimum-town-size c:+ 1)
     (up-chat-data-to-self "Town size max increased = %d" s: sn-maximum-town-size)
@@ -17,7 +17,7 @@
 	(timer-triggered 2)
 =>
 	(disable-timer 2)
-    (enable-timer 2 240)
+    (enable-timer 2 200)
     (up-modify-goal maxLumberCampsQty c:+ 1)
     ;(up-chat-data-to-self "Lumber camps max qty increased = %d" g: maxLumberCampsQty)
 )
@@ -38,18 +38,16 @@
     (enable-timer 4 90)
     (disable-self)
 )
+
 ; TIMER 4 INCREASES LUMBER CAMPS DISTANCE SLOWLY AFTER BUILDING ONE
-
-
 (defrule
 	(timer-triggered 4)
 =>
 	(disable-timer 4)
-    (enable-timer 4 110) 
+    (enable-timer 4 100) 
     (up-modify-sn sn-lumber-camp-max-distance g:+ lumberCampDistanceIncrement)
     (up-chat-data-to-self "Lumber camps max distance increased = %d" s: sn-lumber-camp-max-distance)
 )
-
 
 ; TIMER 5 INCREASES MINING CAMPS QUANTITY
 (defrule(building-type-count mining-camp > 0)=>(enable-timer 5 180)(disable-self))
