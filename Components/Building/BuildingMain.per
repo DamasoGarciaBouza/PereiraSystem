@@ -514,6 +514,32 @@
     (up-build place-control 0 c: market)
 )
 
+; MARKET 3
+(defrule
+    (current-age == imperial-age)
+    (up-players-in-game ally > 1)
+    (building-type-count town-center > 1)
+    (building-type-count-total market == 2)
+    (up-can-build 0 c: market)
+=>
+    (chat-local-to-self "Trying To Build Market 3 far away")
+    (up-set-placement-data my-player-number town-center c:- 128)
+    (up-build place-control 0 c: market)
+)
+
+; MARKET 4
+(defrule
+    (current-age == imperial-age)
+    (up-players-in-game ally > 1)
+    (building-type-count town-center > 1)
+    (building-type-count-total market == 3)
+    (up-can-build 0 c: market)
+=>
+    (chat-local-to-self "Trying To Build Market 4 far away")
+    (up-set-placement-data my-player-number town-center c:- 256)
+    (up-build place-control 0 c: market)
+)
+
 ; CARAVANSERAI
 (defrule
     (current-age == imperial-age)
