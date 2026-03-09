@@ -1,27 +1,27 @@
 ; TIMERS DEBUG 1 TO 14
 
-; TIMER 1 - VILLAGERS DEBUG
+; TIMER 1 - VILLAGERS PERCENT DEBUG
 (defrule
-  (goal debugVillagers 1)
+  (goal debugVillagersPercent 1)
 =>
   (enable-timer 1 60)
   (disable-self)
 )
 
 (defrule
-  (goal debugVillagers 1)
+  (goal debugVillagersPercent 1)
   (timer-triggered 1)
 =>
   (disable-timer 1)
   (enable-timer 1 60)
-  (up-chat-data-to-self "FOOD GATHERERS: %d" s: sn-food-gatherer-percentage)
-  (up-chat-data-to-self "WOOD GATHERERS: %d" s: sn-wood-gatherer-percentage)
-  (up-chat-data-to-self "GOLD GATHERERS: %d" s: sn-gold-gatherer-percentage)
-  (up-chat-data-to-self "STONE GATHERERS: %d" s: sn-stone-gatherer-percentage)
+  (up-chat-data-to-self "Wood gatherers %: %d" s: sn-wood-gatherer-percentage)  
+  (up-chat-data-to-self "Food gatherers %: %d" s: sn-food-gatherer-percentage)
+  (up-chat-data-to-self "Gold gatherers %: %d" s: sn-gold-gatherer-percentage)
+  (up-chat-data-to-self "Stone gatherers %: %d" s: sn-stone-gatherer-percentage)
 )
 
 (defrule
-  (goal debugVillagers 0)
+  (goal debugVillagersPercent 0)
   (timer-triggered 1)
 =>
   (disable-timer 1)
