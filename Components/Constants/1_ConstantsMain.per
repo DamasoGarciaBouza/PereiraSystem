@@ -280,6 +280,10 @@
   (generate-random-number 600)
   (up-get-fact random-number 0 randomNumber)
   (up-modify-goal secondsUntilFirstAttack g:+ randomNumber)
+  (up-modify-goal minutesUntilFirstAttack g:= secondsUntilFirstAttack)
+  (up-modify-goal minutesUntilFirstAttack c:/ 60)
   (up-chat-data-to-player my-player-number "SECONDS UNTIL FIRST ATTACK: %d" g: secondsUntilFirstAttack)
+  (up-chat-data-to-player my-player-number "MINUTES UNTIL FIRST ATTACK: %d" g: minutesUntilFirstAttack)
   (disable-self)
 )
+
