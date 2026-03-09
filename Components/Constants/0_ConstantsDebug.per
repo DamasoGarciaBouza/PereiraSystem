@@ -2,80 +2,20 @@
 ; Set to 1 to enable debug messages for that topic, 0 to disable
 
 ; ECONOMY - 1 TO 5
-(defconst debugVillagers 1)
-(defconst debugFarms 2)
-(defconst debugResources 3)
-(defconst debugTrade 4)
+(defconst debugVillagersPercent 1)
+(defconst debugFarming 2)
+(defconst debugWood 3)
+(defconst debugMining 4)
 (defconst debugFishing 5)
-
-; BUILDING - 6 TO 10
-(defconst debugCamps 6)
-(defconst debugHouses 7)
-(defconst debugMilitaryBuildings 8)
-(defconst debugWalls 9)
-(defconst debugCastle 10)
-
-; MILITARY - 11 TO 17
-(defconst debugArmySize 11)
-(defconst debugAttackTimer 12)
-(defconst debugInfantry 13)
-(defconst debugArchers 14)
-(defconst debugCavalry 15)
-(defconst debugSiege 16)
-(defconst debugMonks 17)
-
-; DETECTION - 18 TO 22
-(defconst debugEnemyUnits 18)
-(defconst debugEnemyBuildings 19)
-(defconst debugAllyStatus 20)
-(defconst debugTribute 21)
-(defconst debugNavy 22)
-
-; STRATEGY - 23 TO 27
-(defconst debugStrategy 23)
-(defconst debugCivCharacteristics 24)
-(defconst debugResearch 25)
-(defconst debugAgeUp 26)
-(defconst debugMapInfo 27)
-
-; SPARE - 28 TO 30
-(defconst debugSpare1 28)
-(defconst debugSpare2 29)
-(defconst debugSpare3 30)
 
 ; INITIALIZATION - ALL OFF BY DEFAULT
 (defrule
   (true)
 =>
-  (set-goal debugVillagers 1)
-  (set-goal debugFarms 0)
-  (set-goal debugResources 0)
-  (set-goal debugTrade 0)
+  (set-goal debugVillagersPercent 1)
+  (set-goal debugFarming 0)
+  (set-goal debugWood 0)
+  (set-goal debugMining 0)
   (set-goal debugFishing 0)
-  (set-goal debugCamps 0)
-  (set-goal debugHouses 0)
-  (set-goal debugMilitaryBuildings 0)
-  (set-goal debugWalls 0)
-  (set-goal debugCastle 0)
-  (set-goal debugArmySize 0)
-  (set-goal debugAttackTimer 0)
-  (set-goal debugInfantry 0)
-  (set-goal debugArchers 0)
-  (set-goal debugCavalry 0)
-  (set-goal debugSiege 0)
-  (set-goal debugMonks 0)
-  (set-goal debugEnemyUnits 0)
-  (set-goal debugEnemyBuildings 0)
-  (set-goal debugAllyStatus 0)
-  (set-goal debugTribute 0)
-  (set-goal debugNavy 0)
-  (set-goal debugStrategy 0)
-  (set-goal debugCivCharacteristics 0)
-  (set-goal debugResearch 0)
-  (set-goal debugAgeUp 0)
-  (set-goal debugMapInfo 0)
-  (set-goal debugSpare1 0)
-  (set-goal debugSpare2 0)
-  (set-goal debugSpare3 0)
   (disable-self)
 )
