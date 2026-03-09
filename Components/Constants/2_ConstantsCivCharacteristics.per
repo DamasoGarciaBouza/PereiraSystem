@@ -1,0 +1,29 @@
+; CIV CHARACTERISTICS CONSTANTS: 81 TO 90
+
+(defconst civNeedsArchersSoon 81)
+(defconst civNeedsCavalrySoon 82)
+(defconst civNeedsMonastery 83)
+(defconst civHasGunpowderBonus 84)
+
+(defrule
+    (or
+        (or(civ-selected aztec)(civ-selected mayan))
+        (or(civ-selected italian)(civ-selected korean))
+    )
+=>
+    (set-goal civNeedsArchersSoon 1)
+    (disable-self)
+)
+
+; FIX: bulgarians x4 era padding incompleto - añadir civs que necesitan caballería pronto
+; TODO: revisar qué civs deben activar civNeedsCavalrySoon
+(defrule
+    (or
+        (or(civ-selected bulgarians)(civ-selected bulgarians))
+        (or(civ-selected bulgarians)(civ-selected bulgarians))
+    )
+=>
+    (set-goal civNeedsCavalrySoon 1)
+    (disable-self)
+)
+

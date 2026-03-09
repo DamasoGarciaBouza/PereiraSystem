@@ -1,35 +1,36 @@
-; CONSTANTS 1 TO 50
-(defconst randomNumber 1)
+; MAIN CONSTANTS: 31 TO 80
 
-(defconst weMovedPlace 2) ;for experimental move to the coast tactic
-(defconst weHaveTownCenterAndWoodForLC 3)
-(defconst weHaveBarracksAndSomeVillagers 4)
-(defconst weHaveArcheryOrStableAndSomeSoldiers 5)
+(defconst randomNumber 31)
 
-(defconst populationRoomBeforeBuildingHouses 6); NEED TO USE IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-(defconst lumberCampDistanceIncrement 7); 
-(defconst miningCampDistanceIncrement 8); 
+(defconst weMovedPlace 32) ;for experimental move to the coast tactic
+(defconst weHaveTownCenterAndWoodForLC 33)
+(defconst weHaveBarracksAndSomeVillagers 34)
+(defconst weHaveArcheryOrStableAndSomeSoldiers 35)
 
-(defconst avoidBuildingDocks 10)
-(defconst avoidCreatingNavy 11)
-(defconst weStoppedLumberjacks 12)
+(defconst populationRoomBeforeBuildingHouses 36)
+(defconst lumberCampDistanceIncrement 37)
+(defconst miningCampDistanceIncrement 38)
 
-(defconst secondsUntilFirstAttack 20)
-(defconst minutesUntilFirstAttack 21); for info only
-(defconst weAreAttacking 22)
-(defconst minArmySize 24)
-(defconst maxArmySize 25)
-(defconst numberAttackGroups 26)
+(defconst avoidBuildingDocks 40)
+(defconst avoidCreatingNavy 41)
+(defconst weStoppedLumberjacks 42)
 
-(defconst deletingBarracks 30)
-(defconst deletingStable 31)
-(defconst deletingArchery 32)
-(defconst deletingSiege 33)
+(defconst secondsUntilFirstAttack 50)
+(defconst minutesUntilFirstAttack 51) ; for info only
+(defconst weAreAttacking 52)
+(defconst minArmySize 54)
+(defconst maxArmySize 55)
+(defconst numberAttackGroups 56)
 
-(defconst civilianMessages 49)
-(defconst militaryMessages 50)
+(defconst deletingBarracks 60)
+(defconst deletingStable 61)
+(defconst deletingArchery 62)
+(defconst deletingSiege 63)
 
-; FIX: eliminada regla duplicada, solo se deja una
+(defconst civilianMessages 79)
+(defconst militaryMessages 80)
+
+; INITIALIZATION
 (defrule
   (true)
 =>
@@ -39,11 +40,11 @@
   (set-goal deletingSiege 0)
   (set-goal weAreAttacking 0)
   (disable-self)
-)  
+)
 
 (defrule
   (population-cap <= 250)
-  =>
+=>
   (set-goal lumberCampDistanceIncrement 1)
   (set-goal miningCampDistanceIncrement 4)
   (disable-self)
@@ -51,7 +52,7 @@
 
 (defrule
   (population-cap > 250)
-  =>
+=>
   (set-goal lumberCampDistanceIncrement 2)
   (set-goal miningCampDistanceIncrement 8)
   (disable-self)
@@ -59,14 +60,13 @@
 
 (defrule
   (population-cap > 400)
-  =>
+=>
   (set-goal lumberCampDistanceIncrement 4)
   (set-goal miningCampDistanceIncrement 16)
   (disable-self)
 )
 
-; AVOID DOCKS - 10
-; FIX: eliminados mapas duplicados (acropolis x2, arabia, black-forest, cenotes repetidos)
+; AVOID DOCKS - 40
 (defrule
   (or
     (or
@@ -77,7 +77,7 @@
       (or(map-type black-forest)(map-type bog-islands))
       (or(map-type budapest)(map-type cenotes))
     )
-  )  
+  )
 =>
   (set-goal avoidBuildingDocks 1)
   (disable-self)
@@ -92,47 +92,46 @@
     (or
       (or(map-type black-forest)(map-type bog-islands))
       (or(map-type budapest)(map-type cenotes))
-    )    
-  )  
+    )
+  )
 =>
   (set-goal avoidBuildingDocks 1)
   (disable-self)
 )
 
-;--------------------
-
+; POPULATION ROOM BEFORE BUILDING HOUSES
 (defrule
   (true)
-  =>
+=>
   (set-goal populationRoomBeforeBuildingHouses 3)
   (disable-self)
 )
 
 (defrule
   (current-age == feudal-age)
-  =>
+=>
   (set-goal populationRoomBeforeBuildingHouses 6)
   (disable-self)
 )
 
 (defrule
   (current-age == castle-age)
-  =>
+=>
   (set-goal populationRoomBeforeBuildingHouses 9)
   (disable-self)
 )
 
 (defrule
   (current-age == imperial-age)
-  =>
+=>
   (set-goal populationRoomBeforeBuildingHouses 14)
   (disable-self)
 )
 
-; MIN/MAX ARMY SIZE - FIX: usando >= en orden descendente para cubrir cualquier pop cap
+; MIN/MAX ARMY SIZE - usando >= en orden descendente para cubrir cualquier pop cap
 (defrule
   (population-cap >= 500)
-  =>
+=>
   (set-goal minArmySize 199)
   (set-goal maxArmySize 200)
   (disable-self)
@@ -140,7 +139,7 @@
 
 (defrule
   (population-cap >= 450)
-  =>
+=>
   (set-goal minArmySize 179)
   (set-goal maxArmySize 180)
   (disable-self)
@@ -148,7 +147,7 @@
 
 (defrule
   (population-cap >= 400)
-  =>
+=>
   (set-goal minArmySize 159)
   (set-goal maxArmySize 160)
   (disable-self)
@@ -156,7 +155,7 @@
 
 (defrule
   (population-cap >= 350)
-  =>
+=>
   (set-goal minArmySize 139)
   (set-goal maxArmySize 140)
   (disable-self)
@@ -164,7 +163,7 @@
 
 (defrule
   (population-cap >= 300)
-  =>
+=>
   (set-goal minArmySize 119)
   (set-goal maxArmySize 120)
   (disable-self)
@@ -172,7 +171,7 @@
 
 (defrule
   (population-cap >= 275)
-  =>
+=>
   (set-goal minArmySize 109)
   (set-goal maxArmySize 110)
   (disable-self)
@@ -180,7 +179,7 @@
 
 (defrule
   (population-cap >= 250)
-  =>
+=>
   (set-goal minArmySize 99)
   (set-goal maxArmySize 100)
   (disable-self)
@@ -188,7 +187,7 @@
 
 (defrule
   (population-cap >= 225)
-  =>
+=>
   (set-goal minArmySize 89)
   (set-goal maxArmySize 90)
   (disable-self)
@@ -196,7 +195,7 @@
 
 (defrule
   (population-cap >= 200)
-  =>
+=>
   (set-goal minArmySize 79)
   (set-goal maxArmySize 80)
   (disable-self)
@@ -204,7 +203,7 @@
 
 (defrule
   (population-cap >= 175)
-  =>
+=>
   (set-goal minArmySize 69)
   (set-goal maxArmySize 70)
   (disable-self)
@@ -212,7 +211,7 @@
 
 (defrule
   (population-cap >= 150)
-  =>
+=>
   (set-goal minArmySize 59)
   (set-goal maxArmySize 60)
   (disable-self)
@@ -220,7 +219,7 @@
 
 (defrule
   (population-cap >= 125)
-  =>
+=>
   (set-goal minArmySize 49)
   (set-goal maxArmySize 50)
   (disable-self)
@@ -228,7 +227,7 @@
 
 (defrule
   (population-cap >= 100)
-  =>
+=>
   (set-goal minArmySize 39)
   (set-goal maxArmySize 40)
   (disable-self)
@@ -236,7 +235,7 @@
 
 (defrule
   (population-cap >= 75)
-  =>
+=>
   (set-goal minArmySize 29)
   (set-goal maxArmySize 30)
   (disable-self)
@@ -244,13 +243,13 @@
 
 (defrule
   (population-cap >= 50)
-  =>
+=>
   (set-goal minArmySize 19)
   (set-goal maxArmySize 20)
   (disable-self)
 )
 
-; SECONDS UNTIL FIRST ATTACK ----------------
+; SECONDS UNTIL FIRST ATTACK
 ; FIXED PART (ludicrous not recognized so its default)
 (defrule(true)=>(set-goal secondsUntilFirstAttack 3600)(disable-self))
 
