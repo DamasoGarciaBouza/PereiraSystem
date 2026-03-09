@@ -1,13 +1,6 @@
-; MILITARY TIMERS
+; TIMERS MILITARY 30 TO 37
 
-(defrule
-    (true)
-=>
-    (up-chat-data-to-player my-player-number "SECONDS UNTIL FIRST ATTACK %d" g: secondsUntilFirstAttack)
-    (disable-self)
-)
-
-; ATTACK TIMER 21
+; ATTACK TIMER 30
 (defrule
     (up-players-in-game enemy > 0)
     (or
@@ -21,17 +14,46 @@
         )
     )
 =>
-    (enable-timer 21 00)
+    (enable-timer 30 00)
     (chat-to-player my-player-number "ATTACK CONDITIONS HAVE BEEN MET!")
     (disable-self)
 )
 
-
 ; ATTACK!
+(defrule
+    (current-age == imperial-age)
+    (food-amount > 1200)
+    (timer-triggered 30)
+    (up-players-in-game enemy > 0)
+    (military-population > minArmySize)
+=>
+	(disable-timer 30)
+    (enable-timer 30 30)
+    (set-strategic-number sn-target-player-number 0)   
+    (set-strategic-number sn-percent-attack-soldiers 100)
+    (set-goal weAreAttacking 1)
+    (attack-now)
+    (chat-to-allies "31 Attack!")
+    (chat-to-player my-player-number "ATTACK!")
+)
+
+; RETREAT
+(defrule
+    (game-time > 1800)
+	(up-players-in-game enemy > 0)
+    (military-population g:< minArmySize)
+    (players-building-type-count focus-player castle > 0)
+=>
+    (up-retreat-now)
+    (chat-to-allies "45 I Have No Soldiers To Destroy A Castle!")
+    (chat-local-to-self "<<< RETREAT!")
+)
+
+; ATTACK SIZE RULES
 (defrule
     (population-cap >= 150)
     (population-cap < 175)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 59)
     (set-strategic-number sn-maximum-attack-group-size 60)
@@ -43,7 +65,7 @@
 (defrule
     (population-cap >= 175)
     (population-cap < 200)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 69)
     (set-strategic-number sn-maximum-attack-group-size 70)
@@ -55,7 +77,7 @@
 (defrule
     (population-cap >= 200)
     (population-cap < 225)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 79)
     (set-strategic-number sn-maximum-attack-group-size 80)
@@ -67,7 +89,7 @@
 (defrule
     (population-cap >= 225)
     (population-cap < 250)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 89)
     (set-strategic-number sn-maximum-attack-group-size 90)
@@ -79,7 +101,7 @@
 (defrule
     (population-cap >= 250)
     (population-cap < 275)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 99)
     (set-strategic-number sn-maximum-attack-group-size 100)
@@ -91,7 +113,7 @@
 (defrule
     (population-cap >= 275)
     (population-cap < 300)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 109)
     (set-strategic-number sn-maximum-attack-group-size 110)
@@ -103,7 +125,7 @@
 (defrule
     (population-cap >= 300)
     (population-cap < 350)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 119)
     (set-strategic-number sn-maximum-attack-group-size 120)
@@ -115,7 +137,7 @@
 (defrule
     (population-cap >= 350)
     (population-cap < 400)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 139)
     (set-strategic-number sn-maximum-attack-group-size 140)
@@ -127,7 +149,7 @@
 (defrule
     (population-cap >= 400)
     (population-cap < 450)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 159)
     (set-strategic-number sn-maximum-attack-group-size 160)
@@ -139,7 +161,7 @@
 (defrule
     (population-cap >= 450)
     (population-cap < 500)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 179)
     (set-strategic-number sn-maximum-attack-group-size 180)
@@ -150,11 +172,82 @@
 
 (defrule
     (population-cap >= 500)
-    (timer-triggered 21)
+    (timer-triggered 30)
 =>
     (set-strategic-number sn-minimum-attack-group-size 199)
     (set-strategic-number sn-maximum-attack-group-size 200)
     (set-strategic-number sn-number-attack-groups 2)
     (up-chat-data-to-self "MIN ARMY SIZE: %d" s: sn-minimum-attack-group-size)
     (disable-self)
+)
+
+; TRYING TO DELETE FIRST MILITARY BUILDINGS
+(defrule
+    (or(current-age == imperial-age)(cheats-enabled))
+=>
+    (enable-timer 31 120)
+    (enable-timer 32 120)
+    (enable-timer 33 120)
+    (enable-timer 34 120)
+    (disable-self)
+)
+
+(defrule
+    (up-compare-goal militaryBuildingsDistance g:< 460)
+    (goal weAreAttacking 1)
+    (timer-triggered 31)
+    (wood-amount > 2000)
+    (building-type-count-total barracks g:== barracksQty)
+    (building-type-count-total barracks > 3)
+=>
+    (delete-building barracks)
+    (chat-to-player my-player-number "DELETING BARRACKS")
+    (up-modify-goal militaryBuildingsDistance c:+ 6)     
+    (disable-timer 31)
+    (enable-timer 31 120)
+)
+
+(defrule
+    (up-compare-goal militaryBuildingsDistance g:< 460)
+    (goal weAreAttacking 1)
+    (timer-triggered 32)
+    (wood-amount > 2000)
+    (building-type-count-total stable g:== stableQty)
+    (building-type-count-total stable > 3)
+=>
+    (delete-building stable)
+    (chat-to-player my-player-number "DELETING STABLES")
+    (up-modify-goal militaryBuildingsDistance c:+ 6)
+    (disable-timer 32)
+    (enable-timer 32 120)    
+)
+
+(defrule
+    (up-compare-goal militaryBuildingsDistance g:< 460)
+    (goal weAreAttacking 1)
+    (timer-triggered 33)
+    (wood-amount > 2000)
+    (building-type-count-total archery-range g:== archeryRangeQty)
+    (building-type-count-total archery-range > 3)
+=>
+    (delete-building archery-range)
+    (chat-to-player my-player-number "DELETING ARCHERY RANGE")
+    (up-modify-goal militaryBuildingsDistance c:+ 6)
+    (disable-timer 33)
+    (enable-timer 33 120)    
+)
+
+(defrule
+    (up-compare-goal militaryBuildingsDistance g:< 460)
+    (goal weAreAttacking 1)
+    (timer-triggered 34)
+    (wood-amount > 2000)
+    (building-type-count-total siege-workshop g:== siegeWorkshopQty)
+    (building-type-count-total siege-workshop > 3)
+=>
+    (delete-building siege-workshop)
+    (chat-to-player my-player-number "DELETING SIEGE WORKSHOP")
+    (up-modify-goal militaryBuildingsDistance c:+ 6)
+    (disable-timer 34)
+    (enable-timer 34 120)      
 )

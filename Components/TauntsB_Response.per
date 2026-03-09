@@ -1,3 +1,5 @@
+; TIMERS TAUNTS RESPONSE 46 TO 50
+
 ; RESPOND TO TAUNTS
 
 ; ATTACK TAUNT 31
@@ -47,43 +49,41 @@
 	(set-strategic-number sn-minimum-attack-group-size 1)
 	(set-strategic-number sn-maximum-attack-group-size 1)
 	(set-strategic-number sn-number-attack-groups 1000)
-	(set-strategic-number sn-coop-share-attacking 1); maybe leave this always on? 	see military sn
-	;(set-strategic-number sn-target-player-number -1) ; doesnt work?
+	(set-strategic-number sn-coop-share-attacking 1)
 	(set-strategic-number sn-percent-attack-soldiers 100)
 	(attack-now)
-	(enable-timer 42 1); start help-attack timer 42 in X seconds
+	(enable-timer 46 1)
 	(chat-to-allies "I will help!")
 )
 
 ; HELP ATTACK TIMER TO REPEAT THE HELP ATTACK COMMAND
 (defrule 
 	(up-compare-goal weAreAttacking == 0)
-	(timer-triggered 42)
+	(timer-triggered 46)
 =>
 	(attack-now)
-    (disable-timer 42)
-	(enable-timer 42 15); do help- attack every X seconds
+    (disable-timer 46)
+	(enable-timer 46 15)
 	(chat-to-allies "Helping!")
 )
 
 ; DISABLE HELP TIMER
 (defrule
-	(timer-triggered 42)
-	(up-timer-status 43 == timer-disabled) 
+	(timer-triggered 46)
+	(up-timer-status 47 == timer-disabled) 
 =>	
-    (enable-timer 43 120); stop the help-attack timer 42 with disable-help timer 43
+    (enable-timer 47 120)
 	(chat-to-allies "I will stop help in 120 seconds!")
 )
 
 (defrule 
-	(timer-triggered 43)
+	(timer-triggered 47)
 =>
-	(disable-timer 42)
+	(disable-timer 46)
 	(up-retreat-now)
 	(set-strategic-number sn-target-player-number 0)
-	;(set-strategic-number sn-coop-share-attacking 0)
     (chat-to-all "Stopping the help!")
-	(disable-timer 43)
+	(disable-timer 47)
 )
 
 ; RETREAT TAUNT 45
