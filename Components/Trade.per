@@ -38,7 +38,7 @@
     (current-age == feudal-age)
     (can-sell-commodity food)
     (food-amount > 900)
-    (or ; maybe remove this
+    (or
          (wood-amount < 200)
          (stone-amount < 200)
     )
@@ -73,6 +73,7 @@
     (sell-commodity wood)
     ;(chat-local-to-self "SELLING WOOD (> 600)")
 )
+; FIX: condicion era can-buy-commodity wood pero accion era sell-commodity wood
 (defrule
     (current-age == castle-age)
     (building-type-count monastery > 0)
@@ -82,7 +83,7 @@
     (gold-amount > 500)
     (can-buy-commodity wood)
 =>
-    (sell-commodity wood)
+    (buy-commodity wood)
     ;(chat-local-to-self "BUYING WOOD FOR THE SIEGE WORKSHOP / UNIV")
 )
 (defrule
@@ -122,29 +123,28 @@
     (can-sell-commodity wood)
 =>
     (sell-commodity wood)
-    ;(chat-local-to-self "SELLING WOOD (> 9999)")
+    ;(chat-local-to-self "SELLING WOOD (> 99999)")
 )
 
-(defrule ;SELL fOOD
+(defrule ;SELL FOOD
     (current-age == imperial-age)
     (food-amount > 1600)
     (gold-amount < 1000)
     (can-sell-commodity food)
 =>
     (sell-commodity food)
-    ;(chat-local-to-self "SELLING fOOD (> 1600)")
+    ;(chat-local-to-self "SELLING FOOD (> 1600)")
 )
 
-(defrule ;SELL fOOD
+(defrule ;SELL FOOD
     (current-age == imperial-age)
     (food-amount > 99999)
     (gold-amount < 9999)
     (can-sell-commodity food)
 =>
     (sell-commodity food)
-    ;(chat-local-to-self "SELLING fOOD (> 9999)")
+    ;(chat-local-to-self "SELLING FOOD (> 99999)")
 )
-
 
 (defrule
     (current-age == imperial-age)
@@ -153,20 +153,11 @@
     (can-sell-commodity food)
 =>
     (sell-commodity food)
-    ;(chat-local-to-self "SELLING FOOD (> 2400)")
+    ;(chat-local-to-self "SELLING FOOD (> 2200)")
 )
 
-(defrule ;imperial age with no castle, we buy stone
-    (current-age == imperial-age)
-    (building-type-count-total castle == 0)
-    (stone-amount < 650)
-    (not(civ-selected frankish))(not(civ-selected incan))
-	(can-buy-commodity stone)
-=>
-    (buy-commodity stone)
-    ;(chat-local-to-self "BUYING STONE (NO CASTLE)")
-)
-(defrule ;imperial age with no castle, we buy stone
+; FIX: fusionadas las 3 reglas redundantes de stone en 2 claras
+(defrule ;imperial age with no castle, we buy stone (frankish excluded)
     (current-age == imperial-age)
     (building-type-count-total castle == 0)
     (stone-amount < 650)
@@ -174,16 +165,16 @@
 	(can-buy-commodity stone)
 =>
     (buy-commodity stone)
-    ;(chat-local-to-self "BUYING STONE (NO CASTLE)")
+    ;(chat-local-to-self "BUYING STONE (NO CASTLE, NOT FRANKISH)")
 )
-(defrule ;imperial age with no castle, we buy stone
+(defrule ;imperial age with no castle, frankish or incan fallback
     (current-age == imperial-age)
     (building-type-count-total castle == 0)
     (stone-amount < 488)
 	(can-buy-commodity stone)
 =>
     (buy-commodity stone)
-    ;(chat-local-to-self "BUYING STONE (NO CASTLE)")
+    ;(chat-local-to-self "BUYING STONE (NO CASTLE, LOWER THRESHOLD)")
 )
 
 (defrule ;imperial age with many gold, buy stone
@@ -197,12 +188,12 @@
     (buy-commodity stone)
     ;(chat-local-to-self "BUYING STONE")
 )
-; TRIBUTE, just randomly give resources to anyone for now
-; TRIBUTE IN FEUDAL AGE
-; TRIBUTE IN IMPERIAL AGE
+; TRIBUTE
+; IMPERIAL AGE
 (defrule
     (current-age == imperial-age)
     (wood-amount > 1600)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (players-current-age any-ally < imperial-age)
     (up-allied-resource-amount any-ally wood < 200)
 =>
@@ -211,14 +202,16 @@
 (defrule
     (current-age == imperial-age)
     (food-amount > 2100)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (players-current-age any-ally < imperial-age)
-        (up-allied-resource-amount any-ally food < 200)
+    (up-allied-resource-amount any-ally food < 200)
 =>
     (tribute-to-player this-any-ally food 500)
 )
 (defrule
     (current-age == imperial-age)
     (gold-amount > 2000)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (players-current-age any-ally < imperial-age)
     (up-allied-resource-amount any-ally gold < 200)
 =>
@@ -227,6 +220,7 @@
 (defrule
     (current-age == imperial-age)
     (building-type-count castle > 0)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (players-building-type-count any-ally castle == 0)
     (up-allied-resource-amount any-ally stone < 650)
     (stone-amount > 800)
@@ -237,6 +231,7 @@
 (defrule
     (current-age == imperial-age)
     (wood-amount > 4000)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (up-allied-resource-amount any-ally wood < 2000)
 =>
     (tribute-to-player this-any-ally wood 1000)
@@ -244,6 +239,7 @@
 (defrule
     (current-age == imperial-age)
     (food-amount > 4000)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (up-allied-resource-amount any-ally food < 2000)
 =>
     (tribute-to-player this-any-ally food 1000)
@@ -251,6 +247,7 @@
 (defrule
     (current-age == imperial-age)
     (gold-amount > 4000)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (up-allied-resource-amount any-ally gold < 2000)
 =>
     (tribute-to-player this-any-ally gold 1000)
@@ -258,6 +255,7 @@
 (defrule
     (current-age == imperial-age)
     (stone-amount > 4000)
+    (player-in-game this-any-ally) ; FIX: evitar tribute a jugadores eliminados
     (up-allied-resource-amount any-ally stone < 2000)
 =>
     (tribute-to-player this-any-ally stone 1000)
