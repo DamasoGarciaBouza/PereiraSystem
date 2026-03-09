@@ -1,3 +1,33 @@
+; MILITARY TIMERS
+
+(defrule
+    (true)
+=>
+    (up-chat-data-to-player my-player-number "SECONDS UNTIL FIRST ATTACK %d" g: secondsUntilFirstAttack)
+    (disable-self)
+)
+
+; ATTACK TIMER 21
+(defrule
+    (up-players-in-game enemy > 0)
+    (or
+        (or
+            (game-time g:> secondsUntilFirstAttack)
+            (and(wood-amount > 100000)(food-amount > 100000))
+        )
+        (and
+            (cheats-enabled)
+            (game-time > 900)
+                
+        )
+    )
+=>
+    (enable-timer 21 00)
+    (chat-to-player my-player-number "ATTACK CONDITIONS HAVE BEEN MET!")
+    (disable-self)
+)
+
+
 ; ATTACK!
 (defrule
     (population-cap >= 150)
