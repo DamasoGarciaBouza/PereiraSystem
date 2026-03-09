@@ -14,15 +14,12 @@
 (defconst avoidCreatingNavy 11)
 (defconst weStoppedLumberjacks 12)
 
-
 (defconst secondsUntilFirstAttack 20)
 (defconst minutesUntilFirstAttack 21); for info only
 (defconst weAreAttacking 22)
 (defconst minArmySize 24)
 (defconst maxArmySize 25)
 (defconst numberAttackGroups 26)
-
-
 
 (defconst deletingBarracks 30)
 (defconst deletingStable 31)
@@ -32,6 +29,7 @@
 (defconst civilianMessages 49)
 (defconst militaryMessages 50)
 
+; FIX: eliminada regla duplicada, solo se deja una
 (defrule
   (true)
 =>
@@ -42,7 +40,6 @@
   (set-goal weAreAttacking 0)
   (disable-self)
 )  
-
 
 (defrule
   (population-cap <= 250)
@@ -69,15 +66,16 @@
 )
 
 ; AVOID DOCKS - 10
+; FIX: eliminados mapas duplicados (acropolis x2, arabia, black-forest, cenotes repetidos)
 (defrule
   (or
     (or
-      (or(map-type acropolis)(map-type acropolis)); alpine lakes doesnt work
-      (or(map-type arabia)(map-type atacama))
+      (or(map-type acropolis)(map-type arabia))
+      (or(map-type atacama)(map-type baltic))
     )
     (or
-      (or(map-type baltic)(map-type black-forest))
-      (or(map-type bog-islands)(map-type budapest))
+      (or(map-type black-forest)(map-type bog-islands))
+      (or(map-type budapest)(map-type cenotes))
     )
   )  
 =>
@@ -88,20 +86,18 @@
 (defrule
   (or
     (or
-      (or(map-type cenotes)(map-type coastal))
-      (or(map-type coastal-forest)(map-type crater-lake))
+      (or(map-type coastal)(map-type coastal-forest))
+      (or(map-type crater-lake)(map-type crossroads))
     )
     (or
-      (or(map-type crossroads)(map-type arabia))
-      (or(map-type black-forest)(map-type cenotes))
-    )
+      (or(map-type black-forest)(map-type bog-islands))
+      (or(map-type budapest)(map-type cenotes))
+    )    
   )  
 =>
   (set-goal avoidBuildingDocks 1)
-
   (disable-self)
 )
-
 
 ;--------------------
 
@@ -133,113 +129,17 @@
   (disable-self)
 )
 
-; MIN ATTACK GP SIZE - 20
+; MIN/MAX ARMY SIZE - FIX: usando >= en orden descendente para cubrir cualquier pop cap
 (defrule
-  (population-cap == 50)
+  (population-cap >= 500)
   =>
-  (set-goal minArmySize 19)
-  (set-goal maxArmySize 20)
+  (set-goal minArmySize 199)
+  (set-goal maxArmySize 200)
   (disable-self)
 )
 
 (defrule
-  (population-cap == 75)
-  =>
-  (set-goal minArmySize 29)
-  (set-goal maxArmySize 30)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 100)
-  =>
-  (set-goal minArmySize 39)
-  (set-goal maxArmySize 40)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 125)
-  =>
-  (set-goal minArmySize 49)
-  (set-goal maxArmySize 50)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 150)
-  =>
-  (set-goal minArmySize 59)
-  (set-goal maxArmySize 60)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 175)
-  =>
-  (set-goal minArmySize 69)
-  (set-goal maxArmySize 70)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 200)
-  =>
-  (set-goal minArmySize 79)
-  (set-goal maxArmySize 80)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 225)
-  =>
-  (set-goal minArmySize 89)
-  (set-goal maxArmySize 90)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 250)
-  =>
-  (set-goal minArmySize 99)
-  (set-goal maxArmySize 100)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 275)
-  =>
-  (set-goal minArmySize 109)
-  (set-goal maxArmySize 110)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 300)
-  =>
-  (set-goal minArmySize 119)
-  (set-goal maxArmySize 120)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 350)
-  =>
-  (set-goal minArmySize 139)
-  (set-goal maxArmySize 140)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 400)
-  =>
-  (set-goal minArmySize 159)
-  (set-goal maxArmySize 160)
-  (disable-self)
-)
-
-(defrule
-  (population-cap == 450)
+  (population-cap >= 450)
   =>
   (set-goal minArmySize 179)
   (set-goal maxArmySize 180)
@@ -247,14 +147,108 @@
 )
 
 (defrule
-  (population-cap == 500)
+  (population-cap >= 400)
   =>
-  (set-goal minArmySize 199)
-  (set-goal maxArmySize 200)
+  (set-goal minArmySize 159)
+  (set-goal maxArmySize 160)
   (disable-self)
 )
 
+(defrule
+  (population-cap >= 350)
+  =>
+  (set-goal minArmySize 139)
+  (set-goal maxArmySize 140)
+  (disable-self)
+)
 
+(defrule
+  (population-cap >= 300)
+  =>
+  (set-goal minArmySize 119)
+  (set-goal maxArmySize 120)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 275)
+  =>
+  (set-goal minArmySize 109)
+  (set-goal maxArmySize 110)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 250)
+  =>
+  (set-goal minArmySize 99)
+  (set-goal maxArmySize 100)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 225)
+  =>
+  (set-goal minArmySize 89)
+  (set-goal maxArmySize 90)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 200)
+  =>
+  (set-goal minArmySize 79)
+  (set-goal maxArmySize 80)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 175)
+  =>
+  (set-goal minArmySize 69)
+  (set-goal maxArmySize 70)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 150)
+  =>
+  (set-goal minArmySize 59)
+  (set-goal maxArmySize 60)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 125)
+  =>
+  (set-goal minArmySize 49)
+  (set-goal maxArmySize 50)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 100)
+  =>
+  (set-goal minArmySize 39)
+  (set-goal maxArmySize 40)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 75)
+  =>
+  (set-goal minArmySize 29)
+  (set-goal maxArmySize 30)
+  (disable-self)
+)
+
+(defrule
+  (population-cap >= 50)
+  =>
+  (set-goal minArmySize 19)
+  (set-goal maxArmySize 20)
+  (disable-self)
+)
 
 ; SECONDS UNTIL FIRST ATTACK ----------------
 ; FIXED PART (ludicrous not recognized so its default)
@@ -280,9 +274,7 @@
   (disable-self)
 )
 
-
-
-;+ RANDOM PART
+; RANDOM PART
 (defrule
   (true)
 =>
@@ -291,14 +283,3 @@
   (up-modify-goal secondsUntilFirstAttack g:+ randomNumber)
   (disable-self)
 )
-
-(defrule
-  (true)
-=>
-  (set-goal deletingBarracks 0)
-  (set-goal deletingStable 0)
-  (set-goal deletingArchery 0)
-  (set-goal deletingSiege 0)
-  (set-goal weAreAttacking 0)
-  (disable-self)
-)  
