@@ -3,9 +3,9 @@
 ; TIMER 1 - VILLAGERS DEBUG
 (defrule
   (goal debugVillagers 1)
-  (up-timer-status 1 == timer-disabled)
 =>
   (enable-timer 1 60)
+  (disable-self)
 )
 
 (defrule
@@ -22,7 +22,7 @@
 
 (defrule
   (goal debugVillagers 0)
-  (up-timer-status 1 == timer-enabled)
+  (timer-triggered 1)
 =>
   (disable-timer 1)
 )
