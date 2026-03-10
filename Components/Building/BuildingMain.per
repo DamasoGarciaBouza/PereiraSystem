@@ -1,29 +1,77 @@
 ; BUILDING MAIN
-;PROBANDO SI SE SATURA EL SCRIPT - EMERGENCY FARMS - HIGHEST PRIORITY
 
-(defrule
-    (current-age >= castle-age)
-    (building-type-count-total farm == 0)
-=>
-    (chat-local-to-self "0 farms and castle age - can-build?")
-)
+; MAX PRIORITY: FARMS 
 
+; FARMS
+; DARK AGE
 (defrule
-    (current-age >= castle-age)
-    (building-type-count-total farm == 0)
+    (current-age == dark-age)(building-type-count town-center > 0)
+    (building-type-count-total barracks > 0)(wood-amount > 175)
+    (building-type-count-total lumber-camp > 0)
+    (idle-farm-count < 1)
     (can-build farm)
 =>
     (build farm)
-    (chat-local-to-self "EMERGENCY - 0 FARMS!")
 )
 
+; FEUDAL AGE
+(defrule
+    (current-age == feudal-age)(building-type-count town-center > 0)
+    (or
+        (civ-selected gothic)
+        (or
+            (building-type-count-total archery-range > 0)
+            (building-type-count-total stable > 0)
+        )
+    )
+    (wood-amount > 175)(food-amount < 2000)
+    (idle-farm-count < 3)
+    (can-build farm)
+=>
+    (build farm)
+)
+
+; CASTLE AGE
+(defrule
+    (current-age == castle-age)
+    ;(food-amount < 1200)
+    ;(wood-amount > 176)
+    ;(or(building-type-count monastery > 0)(building-type-count siege-workshop > 0))
+    (building-type-count-total farm < 24)
+    (idle-farm-count < 4)
+    (can-build farm)
+=>
+    (build farm)
+)
+
+; IMPERIAL AGE
 (defrule
     (current-age == imperial-age)
-    (building-type-count-total farm < 3)
+    (building-type-count-total farm g:< maxCiviliansImperialAge)
+    (idle-farm-count < 12)
     (can-build farm)
 =>
     (build farm)
-    (chat-local-to-self "EMERGENCY - LOW FARMS!")
+)
+
+; HOUSES
+(defrule
+    (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
+    (and(housing-headroom g:< populationRoomBeforeBuildingHouses)(population-headroom > 0))
+    (up-can-build 0 c: house)
+=>
+    (chat-local-to-self "Trying To Build House - Place Control")
+    (up-set-placement-data my-player-number house c: 0)
+    (up-build place-control 0 c: house)
+)
+
+(defrule
+    (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
+    (and(housing-headroom g:< populationRoomBeforeBuildingHouses)(population-headroom > 0))
+    (can-build house)
+=>
+    (chat-local-to-self "Trying To Build House - Normal")
+    (build house)
 )
 
 ; CASTLE
@@ -324,7 +372,7 @@
         )
     )
     (wood-amount > 175)(food-amount < 2000)
-    (idle-farm-count < 1)
+    (idle-farm-count < 3)
     (can-build farm)
 =>
     (build farm)
@@ -333,11 +381,9 @@
 ; CASTLE AGE
 (defrule
     (current-age == castle-age)
-    (food-amount < 1200)(wood-amount > 176)
-    (or
-        (building-type-count monastery > 0)
-        (building-type-count siege-workshop > 0)
-    )
+    ;(food-amount < 1200)
+    ;(wood-amount > 176)
+    ;(or(building-type-count monastery > 0)(building-type-count siege-workshop > 0))
     (building-type-count-total farm < 24)
     (idle-farm-count < 4)
     (can-build farm)
@@ -790,15 +836,30 @@
     (up-build place-control 0 c: barracks)  
 )
 
+; BARRACKS INFANTRY SPAM - aumenta town size si no estamos al max
 (defrule
     (current-age == imperial-age)
     (or(civ-selected burmese)(civ-selected burgundians))
     (up-compare-goal infantrySpam == 1)
     (building-type-count-total barracks < 4)
+    (up-compare-sn sn-maximum-town-size g:< maxTownSize)
     (can-build barracks)
 =>
     (chat-local-to-self "Trying To Build Barracks Infantry Spam")
     (up-modify-sn sn-maximum-town-size c:+ 6)
+    (build barracks)
+)
+
+; BARRACKS INFANTRY SPAM - sin aumentar town size (ya al maximo)
+(defrule
+    (current-age == imperial-age)
+    (or(civ-selected burmese)(civ-selected burgundians))
+    (up-compare-goal infantrySpam == 1)
+    (building-type-count-total barracks < 4)
+    (up-compare-sn sn-maximum-town-size g:>= maxTownSize)
+    (can-build barracks)
+=>
+    (chat-local-to-self "Trying To Build Barracks Infantry Spam (max town size)")
     (build barracks)
 )
 
@@ -978,14 +1039,28 @@
     (build siege-workshop)
 )
 
+; SIEGE SCORPION SPAM - aumenta town size si no estamos al max
 (defrule
     (current-age == imperial-age)
     (up-compare-goal scorpionsSpam == 1)
     (building-type-count-total siege-workshop < 4)
+    (up-compare-sn sn-maximum-town-size g:< maxTownSize)
     (can-build siege-workshop)
 =>
     (chat-local-to-self "Trying To Build Siege Workshop Scorpion Spam")
     (up-modify-sn sn-maximum-town-size c:+ 6)
+    (build siege-workshop)
+)
+
+; SIEGE SCORPION SPAM - sin aumentar town size (ya al maximo)
+(defrule
+    (current-age == imperial-age)
+    (up-compare-goal scorpionsSpam == 1)
+    (building-type-count-total siege-workshop < 4)
+    (up-compare-sn sn-maximum-town-size g:>= maxTownSize)
+    (can-build siege-workshop)
+=>
+    (chat-local-to-self "Trying To Build Siege Workshop Scorpion Spam (max town size)")
     (build siege-workshop)
 )
 
@@ -1081,18 +1156,36 @@
     (build-forward bombard-tower)
 )
 
+; BOMBARD TOWER - aumenta town size si no estamos al max
 (defrule
     (up-compare-goal militaryBuildingsDistance g:< 460)
     (can-build bombard-tower)
     (gold-amount > 301)
     (building-type-count-total castle g:>= castleQty)
     (not(civ-selected korean))
+    (up-compare-sn sn-maximum-town-size g:< maxTownSize)
     (up-can-build 0 c: bombard-tower)
 =>
     (up-modify-goal militaryBuildingsDistance c:+ 5)
     (up-set-placement-data my-player-number town-center c: militaryBuildingsDistance)    
     (up-build place-control 0 c: bombard-tower)
     (up-chat-data-to-self "Trying To Build B. Tower With Increment %d" g: militaryBuildingsDistance)
+)
+
+; BOMBARD TOWER - sin aumentar town size (ya al maximo)
+(defrule
+    (up-compare-goal militaryBuildingsDistance g:< 460)
+    (can-build bombard-tower)
+    (gold-amount > 301)
+    (building-type-count-total castle g:>= castleQty)
+    (not(civ-selected korean))
+    (up-compare-sn sn-maximum-town-size g:>= maxTownSize)
+    (up-can-build 0 c: bombard-tower)
+=>
+    (up-modify-goal militaryBuildingsDistance c:+ 5)
+    (up-set-placement-data my-player-number town-center c: militaryBuildingsDistance)    
+    (up-build place-control 0 c: bombard-tower)
+    (up-chat-data-to-self "Trying To Build B. Tower With Increment %d (max town size)" g: militaryBuildingsDistance)
 )
 
 (defrule(false)
