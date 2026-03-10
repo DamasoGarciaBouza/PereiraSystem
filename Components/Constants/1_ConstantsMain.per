@@ -21,6 +21,7 @@
 (defconst minArmySize 54)
 (defconst maxArmySize 55)
 (defconst numberAttackGroups 56)
+(defconst maxTownSize 57)
 
 (defconst deletingBarracks 60)
 (defconst deletingStable 61)
@@ -249,6 +250,21 @@
   (disable-self)
 )
 
+; MAX TOWN SIZE - half map size (default covers ludicrous/unrecognized)
+(defrule(true)=>(set-goal maxTownSize 240)(disable-self))
+
+(defrule(map-size tiny)=>(set-goal maxTownSize 60)(disable-self))
+
+(defrule(map-size small)=>(set-goal maxTownSize 72)(disable-self))
+
+(defrule(map-size medium)=>(set-goal maxTownSize 84)(disable-self))
+
+(defrule(map-size normal)=>(set-goal maxTownSize 100)(disable-self))
+
+(defrule(map-size large)=>(set-goal maxTownSize 110)(disable-self))
+
+(defrule(map-size giant)=>(set-goal maxTownSize 120)(disable-self))
+
 ; SECONDS UNTIL FIRST ATTACK
 ; FIXED PART (ludicrous not recognized so its default)
 (defrule(true)=>(set-goal secondsUntilFirstAttack 3600)(disable-self))
@@ -286,4 +302,3 @@
   (up-chat-data-to-player my-player-number "MINUTES UNTIL FIRST ATTACK: %d" g: minutesUntilFirstAttack)
   (disable-self)
 )
-

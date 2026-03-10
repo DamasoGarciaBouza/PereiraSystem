@@ -3,9 +3,10 @@
 ; TIMER 15 INCREASES TOWN SIZE
 (defrule(false)=>(enable-timer 15 720)(disable-self))
 (defrule
-	(timer-triggered 15)
+    (timer-triggered 15)
+    (up-compare-sn sn-maximum-town-size g:< maxTownSize)
 =>
-	(disable-timer 15)
+    (disable-timer 15)
     (enable-timer 15 110)
     (up-modify-sn sn-maximum-town-size c:+ 1)
     (up-modify-sn sn-minimum-town-size c:+ 1)
