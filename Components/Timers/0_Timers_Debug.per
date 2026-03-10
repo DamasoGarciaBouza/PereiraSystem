@@ -14,8 +14,8 @@
 =>
   (disable-timer 1)
   (enable-timer 1 60)
-  (up-chat-data-to-self "Wood gatherers %: %d" s: sn-wood-gatherer-percentage)  
   (up-chat-data-to-self "Food gatherers %: %d" s: sn-food-gatherer-percentage)
+  (up-chat-data-to-self "Wood gatherers %: %d" s: sn-wood-gatherer-percentage)
   (up-chat-data-to-self "Gold gatherers %: %d" s: sn-gold-gatherer-percentage)
   (up-chat-data-to-self "Stone gatherers %: %d" s: sn-stone-gatherer-percentage)
 )
@@ -25,4 +25,29 @@
   (timer-triggered 1)
 =>
   (disable-timer 1)
+)
+
+; TIMER 2 - FARMING DEBUG
+(defrule
+  (goal debugFarming 1)
+=>
+  (enable-timer 2 60)
+  (disable-self)
+)
+
+(defrule
+  (goal debugFarming 1)
+  (timer-triggered 2)
+=>
+  (disable-timer 2)
+  (enable-timer 2 60)
+  ;(up-chat-data-to-self "Farms total: %d" d: building-type-count-total farm)
+  ;(up-chat-data-to-self "Farms idle: %d" d: idle-farm-count)
+)
+
+(defrule
+  (goal debugFarming 0)
+  (timer-triggered 2)
+=>
+  (disable-timer 2)
 )

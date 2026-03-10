@@ -1,4 +1,12 @@
+; BUILDING MAIN
 ;PROBANDO SI SE SATURA EL SCRIPT - EMERGENCY FARMS - HIGHEST PRIORITY
+
+(defrule
+    (current-age >= castle-age)
+    (building-type-count-total farm == 0)
+=>
+    (chat-local-to-self "0 farms and castle age - can-build?")
+)
 
 (defrule
     (current-age >= castle-age)
@@ -857,7 +865,7 @@
 )
 
 (defrule    
-    (up-compare-goal militaryBuildingsDistance g:< 460)
+    ;(up-compare-goal militaryBuildingsDistance g:< 460)
     (wood-amount > 2000)
     (or(wood-amount > 275)(building-type-count market > 0))
     (building-type-count lumber-camp > 0)
@@ -895,7 +903,7 @@
 )
 
 (defrule
-    (up-compare-goal militaryBuildingsDistance g:< 460)
+    ;(up-compare-goal militaryBuildingsDistance g:< 460)
     (wood-amount > 2000)
     (building-type-count-total archery-range g:< archeryRangeQty)    
     (building-type-count-total archery-range > 0)       
@@ -993,7 +1001,7 @@
 )
 
 (defrule
-    (up-compare-goal militaryBuildingsDistance g:< 460)
+    ;(up-compare-goal militaryBuildingsDistance g:< 460)
     (wood-amount > 2000)
     (building-type-count-total siege-workshop g:< siegeWorkshopQty)
     (building-type-count-total siege-workshop > 0)    

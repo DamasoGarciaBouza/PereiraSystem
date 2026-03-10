@@ -14,12 +14,12 @@
 )
 
 ; TIMER 16 INCREASES LUMBER CAMPS QUANTITY
-(defrule(building-type-count lumber-camp > 0)=>(enable-timer 16 240)(disable-self))
+(defrule(building-type-count lumber-camp > 0)=>(enable-timer 16 180)(disable-self))
 (defrule
 	(timer-triggered 16)
 =>
 	(disable-timer 16)
-    (enable-timer 16 120)
+    (enable-timer 16 60)
     (up-modify-goal maxLumberCampsQty c:+ 1)
     ;(up-chat-data-to-self "Lumber camps max qty increased = %d" g: maxLumberCampsQty)
 )
@@ -38,7 +38,7 @@
 	(building-type-count-total lumber-camp > 0)
 =>
 	(disable-timer 17)
-    (enable-timer 18 90)
+    (enable-timer 18 60)
     (disable-self)
 )
 
@@ -47,7 +47,7 @@
 	(timer-triggered 18)
 =>
 	(disable-timer 18)
-    (enable-timer 18 90) 
+    (enable-timer 18 80) 
     (up-modify-sn sn-lumber-camp-max-distance g:+ lumberCampDistanceIncrement)
     (up-chat-data-to-self "Lumber camps max distance increased = %d" s: sn-lumber-camp-max-distance)
 )
@@ -87,7 +87,6 @@
 
 ; TIMER 22 - DELETES VILLAGERS
 (defrule(true)=>(enable-timer 22 1200)(disable-self))
-(defrule(false)
     (timer-triggered 22)
     (current-age == imperial-age)(building-type-count town-center > 0)
     (civilian-population > 45)
