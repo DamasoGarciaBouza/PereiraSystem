@@ -16,6 +16,7 @@
 
 ; FEUDAL AGE
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (current-age == feudal-age)(building-type-count town-center > 0)
     (or
         (civ-selected gothic)
@@ -33,6 +34,7 @@
 
 ; CASTLE AGE
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (current-age == castle-age)
     ;(food-amount < 1200)
     ;(wood-amount > 176)
@@ -46,6 +48,7 @@
 
 ; IMPERIAL AGE
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (current-age == imperial-age)
     (building-type-count-total farm g:< maxCiviliansImperialAge)
     (idle-farm-count < 12)
@@ -56,6 +59,7 @@
 )
 
 (defrule ; test
+    (wood-amount g:> minimumWoodForLC)
     (current-age == imperial-age)
     (can-build farm)
 =>
@@ -64,6 +68,7 @@
 
 ; EMERGENCY FARM
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (building-type-count-total farm < 8)
     (can-build farm)
 =>
@@ -74,6 +79,7 @@
 
 
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (building-type-count-total farm == 0)
     (up-can-build 0 c: farm)
 =>
@@ -83,6 +89,7 @@
 )
 
 (defrule
+    (wood-amount g:> minimumWoodForLC)
     (building-type-count-total farm == 0)
     (up-can-build 0 c: farm)
 =>
@@ -101,7 +108,7 @@
 
 ; HOUSES
 (defrule
-    (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
+    (wood-amount g:> minimumWoodForLC)
     (housing-headroom g:< populationRoomBeforeBuildingHouses)
     (population-headroom > 0)
     (population < population-cap)
@@ -113,7 +120,7 @@
 )
 
 (defrule
-    (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
+    (wood-amount g:> minimumWoodForLC)
     (housing-headroom g:< populationRoomBeforeBuildingHouses)
     (population-headroom > 0)
     (population < population-cap)
