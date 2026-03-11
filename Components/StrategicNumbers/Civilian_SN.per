@@ -186,15 +186,15 @@
     (disable-self)
 )
 
-;(defrule
-;    (current-age == imperial-age)
-;=>
-;    (set-strategic-number sn-percent-civilian-explorers 0)
-;    (set-strategic-number sn-percent-civilian-builders 25)
-;   (set-strategic-number sn-percent-civilian-gatherers 75)    
-;    (set-strategic-number sn-cap-civilian-builders 40)
-;    (disable-self)
-;)
+(defrule
+    (current-age == imperial-age)
+=>
+    (set-strategic-number sn-percent-civilian-explorers 0)
+    (set-strategic-number sn-percent-civilian-builders 20)
+    (set-strategic-number sn-percent-civilian-gatherers 80)    
+    (set-strategic-number sn-cap-civilian-builders 1000)
+    (disable-self)
+)
 
 ; PERCENT GATHERERS AND DROP DISTANCES
 (defrule
@@ -247,8 +247,8 @@
 (defrule
     (current-age == castle-age)
 =>
-    (set-strategic-number sn-food-gatherer-percentage 68)
-    (set-strategic-number sn-wood-gatherer-percentage 20)
+    (set-strategic-number sn-food-gatherer-percentage 60)
+    (set-strategic-number sn-wood-gatherer-percentage 28)
     (set-strategic-number sn-gold-gatherer-percentage 8)
     (set-strategic-number sn-stone-gatherer-percentage 4)
     (set-strategic-number sn-maximum-stone-drop-distance 9)
