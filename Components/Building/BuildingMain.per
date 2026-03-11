@@ -52,7 +52,7 @@
     (can-build farm)
 =>
     (build farm)
-        (chat-local-to-self "FARM SPAM !!!!")
+    (chat-local-to-self "FARM SPAM !!!!")
 )
 
 (defrule ; test
@@ -65,20 +65,38 @@
 ; EMERGENCY FARM
 (defrule
     (building-type-count-total farm < 8)
-
     (can-build farm)
 =>
     (build farm)
     (chat-local-to-self "Emergency farm !!!!")
 )
 
+
+
 (defrule
-    (current-age == castle-age)
+    (building-type-count-total farm == 0)
+    (up-can-build 0 c: farm)
+=>
+    (chat-local-to-self "Building farm - place control - town center")
+    (up-set-placement-data my-player-number -1 c: 0)
+    (up-build place-control 0 c: farm)
+)
+
+(defrule
+    (building-type-count-total farm == 0)
+    (up-can-build 0 c: farm)
+=>
+    (chat-local-to-self "Building farm - place control - mill")
+    (up-set-placement-data my-player-number mill c: 0)
+    (up-build place-control 0 c: farm)
+)
+
+(defrule
+    (current-age >= feudal-age)
     (goal glFarms 0)  ; si farms == 0, algo está muy mal
 =>
-    (up-chat-goal-to-self "FARMS TOTALES: " glFarms)
-    (up-chat-goal-to-self "IDLE FARMS: " glIdleFarms)
-    (disable-self)
+    (up-chat-data-to-self "FARMS TOTALES: %d" g: glFarms)
+    (up-chat-data-to-self "IDLE FARMS: %d" g: glIdleFarms)
 )
 
 ; HOUSES
