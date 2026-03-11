@@ -57,7 +57,9 @@
 ; HOUSES
 (defrule
     (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
-    (and(housing-headroom g:< populationRoomBeforeBuildingHouses)(population-headroom > 0))
+    (housing-headroom g:< populationRoomBeforeBuildingHouses)
+    (population-headroom > 0)
+    (population < population-cap)
     (up-can-build 0 c: house)
 =>
     (chat-local-to-self "Trying To Build House - Place Control")
@@ -67,7 +69,9 @@
 
 (defrule
     (or(wood-amount g:> minimumWoodForLC)(building-type-count lumber-camp > 2))
-    (and(housing-headroom g:< populationRoomBeforeBuildingHouses)(population-headroom > 0))
+    (housing-headroom g:< populationRoomBeforeBuildingHouses)
+    (population-headroom > 0)
+    (population < population-cap)
     (can-build house)
 =>
     (chat-local-to-self "Trying To Build House - Normal")
