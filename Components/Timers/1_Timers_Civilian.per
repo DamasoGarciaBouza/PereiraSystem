@@ -14,15 +14,55 @@
     (up-chat-data-to-self "Town size min increased = %d" s: sn-minimum-town-size)
 )
 
+
 ; TIMER 16 INCREASES LUMBER CAMPS QUANTITY
 (defrule(building-type-count lumber-camp > 0)=>(enable-timer 16 180)(disable-self))
+
 (defrule
-	(timer-triggered 16)
+    (timer-triggered 16)
+    (current-age == dark-age)
 =>
-	(disable-timer 16)
-    (enable-timer 16 60)
+    (disable-timer 16)
+    (enable-timer 16 90)
     (up-modify-goal maxLumberCampsQty c:+ 1)
-    ;(up-chat-data-to-self "Lumber camps max qty increased = %d" g: maxLumberCampsQty)
+)
+
+(defrule
+    (timer-triggered 16)
+    (current-age == feudal-age)
+=>
+    (disable-timer 16)
+    (enable-timer 16 120)
+    (up-modify-goal maxLumberCampsQty c:+ 1)
+)
+
+(defrule
+    (timer-triggered 16)
+    (current-age == castle-age)
+    (up-compare-goal maxLumberCampsQty c:< 4)
+=>
+    (disable-timer 16)
+    (enable-timer 16 180)
+    (up-modify-goal maxLumberCampsQty c:+ 1)
+)
+
+(defrule
+    (timer-triggered 16)
+    (current-age == castle-age)
+    (up-compare-goal maxLumberCampsQty c:>= 4)
+=>
+    (disable-timer 16)
+    (enable-timer 16 600)
+    (up-modify-goal maxLumberCampsQty c:+ 1)
+)
+
+(defrule
+    (timer-triggered 16)
+    (current-age == imperial-age)
+=>
+    (disable-timer 16)
+    (enable-timer 16 120)
+    (up-modify-goal maxLumberCampsQty c:+ 1)
 )
 
 ; TIMER 17 INCREASES LUMBER CAMPS DISTANCE FAST WHEN WE HAVE NONE
