@@ -140,13 +140,19 @@
     (up-delete-idle-units idle-type-villager)
 )
 
-; TIMER 23 - DELETES CARTS
-(defrule(true)=>(enable-timer 23 1200)(disable-self))
+; TIMER 23 - DELETES IDLE CARTS
+(defrule
+    (unit-type-count-total trade-cart > 0)
+=>
+    (enable-timer 23 1200)
+    (disable-self)
+)
+
 (defrule
     (timer-triggered 23)
 =>
-	(chat-local-to-self "DELETING IDLE CARTS!")
-	(disable-timer 23)
+    (chat-local-to-self "DELETING IDLE CARTS!")
+    (disable-timer 23)
     (enable-timer 23 150)
     (up-delete-idle-units idle-type-trade-cart)
 )
