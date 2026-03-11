@@ -141,7 +141,7 @@
 )
 
 ; TIMER 23 - DELETES CARTS
-(defrule(true)=>(enable-timer 23 1200)(disable-self))
+(defrule(unit-count-total trade-cart-class > 0)=>(enable-timer 23 1200)(disable-self))
 (defrule
     (timer-triggered 23)
 =>
