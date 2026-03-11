@@ -52,6 +52,33 @@
     (can-build farm)
 =>
     (build farm)
+        (chat-local-to-self "FARM SPAM !!!!")
+)
+
+(defrule ; test
+    (current-age == imperial-age)
+    (can-build farm)
+=>
+    (build farm)
+)
+
+; EMERGENCY FARM
+(defrule
+    (building-type-count-total farm < 8)
+
+    (can-build farm)
+=>
+    (build farm)
+    (chat-local-to-self "Emergency farm !!!!")
+)
+
+(defrule
+    (current-age == castle-age)
+    (goal glFarms 0)  ; si farms == 0, algo está muy mal
+=>
+    (up-chat-goal-to-self "FARMS TOTALES: " glFarms)
+    (up-chat-goal-to-self "IDLE FARMS: " glIdleFarms)
+    (disable-self)
 )
 
 ; HOUSES
@@ -449,7 +476,7 @@
     (dropsite-min-distance gold > 3)
     (can-build mining-camp)
 =>
-    (up-chat-data-to-self "Trying To Build Mining Camp (Gold 1) - Max Distance: %d" s: sn-mining-camp-max-distance)
+    ;(up-chat-data-to-self "Trying To Build Mining Camp (Gold 1) - Max Distance: %d" s: sn-mining-camp-max-distance)
     (build mining-camp)
 )
 
@@ -464,7 +491,7 @@
     (dropsite-min-distance gold > 3)
     (can-build mining-camp)
 =>
-    (up-chat-data-to-self "Trying To Build Mining Camp (Gold) - Max Distance: %d" s: sn-mining-camp-max-distance)
+    ;(up-chat-data-to-self "Trying To Build Mining Camp (Gold) - Max Distance: %d" s: sn-mining-camp-max-distance)
     (build mining-camp)
 )
 
@@ -478,7 +505,7 @@
     (dropsite-min-distance stone > 3)    
     (can-build mining-camp)
 =>
-    (up-chat-data-to-self "Trying To Build Mining Camp (Stone 1) - Max Distance: %d" s: sn-mining-camp-max-distance)
+    ;(up-chat-data-to-self "Trying To Build Mining Camp (Stone 1) - Max Distance: %d" s: sn-mining-camp-max-distance)
     (build mining-camp)
 )
 
@@ -489,7 +516,7 @@
     (dropsite-min-distance stone > 3)    
     (can-build mining-camp)
 =>
-    (up-chat-data-to-self "Trying To Build Mining Camp (Stone 2) - Max Distance: %d" s: sn-mining-camp-max-distance)
+    ;(up-chat-data-to-self "Trying To Build Mining Camp (Stone 2) - Max Distance: %d" s: sn-mining-camp-max-distance)
     (build mining-camp)
 )
 
@@ -502,7 +529,7 @@
     (dropsite-min-distance stone > 3)
     (can-build mining-camp)
 =>
-    (up-chat-data-to-self "Trying To Build Mining Camp (Stone) - Max Distance: %d" s: sn-mining-camp-max-distance)
+    ;(up-chat-data-to-self "Trying To Build Mining Camp (Stone) - Max Distance: %d" s: sn-mining-camp-max-distance)
     (build mining-camp)
 )
 

@@ -7,7 +7,7 @@
     (up-compare-sn sn-maximum-town-size g:< maxTownSize)
 =>
     (disable-timer 15)
-    (enable-timer 15 110)
+    (enable-timer 15 80)
     (up-modify-sn sn-maximum-town-size c:+ 1)
     (up-modify-sn sn-minimum-town-size c:+ 1)
     (up-chat-data-to-self "Town size max increased = %d" s: sn-maximum-town-size)
@@ -23,7 +23,7 @@
     (current-age == dark-age)
 =>
     (disable-timer 16)
-    (enable-timer 16 90)
+    (enable-timer 16 120)
     (up-modify-goal maxLumberCampsQty c:+ 1)
 )
 
@@ -32,7 +32,7 @@
     (current-age == feudal-age)
 =>
     (disable-timer 16)
-    (enable-timer 16 120)
+    (enable-timer 16 150)
     (up-modify-goal maxLumberCampsQty c:+ 1)
 )
 
@@ -52,7 +52,7 @@
     (up-compare-goal maxLumberCampsQty c:>= 4)
 =>
     (disable-timer 16)
-    (enable-timer 16 600)
+    (enable-timer 16 200)
     (up-modify-goal maxLumberCampsQty c:+ 1)
 )
 
@@ -90,7 +90,7 @@
 	(disable-timer 18)
     (enable-timer 18 80) 
     (up-modify-sn sn-lumber-camp-max-distance g:+ lumberCampDistanceIncrement)
-    (up-chat-data-to-self "Lumber camps max distance increased = %d" s: sn-lumber-camp-max-distance)
+    ;(up-chat-data-to-self "Lumber camps max distance increased = %d" s: sn-lumber-camp-max-distance)
 )
 
 ; TIMER 19 INCREASES MINING CAMPS QUANTITY
@@ -123,7 +123,7 @@
 	(disable-timer 21)
     (enable-timer 21 110) 
     (up-modify-goal maxMillsQty g:+ 1)
-    (up-chat-data-to-self "Mills max qty increased = %d" g: maxMillsQty)   
+    ;(up-chat-data-to-self "Mills max qty increased = %d" g: maxMillsQty)   
 )
 
 ; TIMER 22 - DELETES VILLAGERS

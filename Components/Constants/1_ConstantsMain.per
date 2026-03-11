@@ -22,6 +22,7 @@
 (defconst maxArmySize 55)
 (defconst numberAttackGroups 56)
 (defconst maxTownSize 57)
+(defconst maxCivilianBuilders 58) ; 20% of maxCiviliansImperialAge, calculated on reaching imperial age
 
 (defconst deletingBarracks 60)
 (defconst deletingStable 61)
@@ -298,7 +299,7 @@
   (up-modify-goal secondsUntilFirstAttack g:+ randomNumber)
   (up-modify-goal minutesUntilFirstAttack g:= secondsUntilFirstAttack)
   (up-modify-goal minutesUntilFirstAttack c:/ 60)
-  (up-chat-data-to-player my-player-number "SECONDS UNTIL FIRST ATTACK: %d" g: secondsUntilFirstAttack)
+  ;(up-chat-data-to-player my-player-number "SECONDS UNTIL FIRST ATTACK: %d" g: secondsUntilFirstAttack)
   (up-chat-data-to-player my-player-number "MINUTES UNTIL FIRST ATTACK: %d" g: minutesUntilFirstAttack)
   (disable-self)
 )

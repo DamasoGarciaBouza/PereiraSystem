@@ -21,3 +21,17 @@
 =>
 	(up-get-fact population-cap 0 popCap)
 )
+
+(defconst glFarms 111)
+(defrule
+    (true)
+=>
+    (up-get-fact building-type-count-total farm glFarms)
+)
+
+(defconst glIdleFarms 112)
+(defrule
+    (true)
+=>
+    (up-get-fact idle-farm-count 0 glIdleFarms)
+)

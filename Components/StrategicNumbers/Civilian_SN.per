@@ -65,9 +65,16 @@
 )
 
 (defrule
-    (current-age == castle-age)
+    (current-age == feudal-age)
 =>
     (up-assign-builders c: house c: 2)
+    (disable-self)
+)
+
+(defrule
+    (current-age == castle-age)
+=>
+    (up-assign-builders c: house c: 3)
     (up-assign-builders c: watch-tower c: 2)
     (up-assign-builders c: guard-tower c: 2)
     (disable-self)
@@ -101,16 +108,16 @@
     (building-type-count archery-range > 0)
     (building-type-count monastery > 0)
 =>
-    (up-modify-sn sn-maximum-town-size c:+ 10)
     (up-modify-sn sn-minimum-town-size c:+ 10)
+    (up-modify-sn sn-maximum-town-size c:+ 10)
     (disable-self)
 )
 
 (defrule
     (building-type-count siege-workshop > 0)
 =>
-    (up-modify-sn sn-maximum-town-size c:+ 10)
     (up-modify-sn sn-minimum-town-size c:+ 10)
+    (up-modify-sn sn-maximum-town-size c:+ 10)
     (disable-self)
 )
 
@@ -186,13 +193,29 @@
     (disable-self)
 )
 
-(defrule
+(defrule(false)
+    (current-age == feudal-age)
+=>
+    (set-strategic-number sn-cap-civilian-builders 10)
+    (disable-self)
+)
+
+(defrule(false)
+    (current-age == castle-age)
+=>
+    (set-strategic-number sn-cap-civilian-builders 15)
+    (disable-self)
+)
+
+(defrule(false)
     (current-age == imperial-age)
 =>
     (set-strategic-number sn-percent-civilian-explorers 0)
     (set-strategic-number sn-percent-civilian-builders 20)
-    (set-strategic-number sn-percent-civilian-gatherers 80)    
-    (set-strategic-number sn-cap-civilian-builders 1000)
+    (set-strategic-number sn-percent-civilian-gatherers 80)
+    (up-modify-goal maxCivilianBuilders g:= maxCiviliansImperialAge)
+    (up-modify-goal maxCivilianBuilders c:%* 20)
+    (up-modify-sn sn-cap-civilian-builders g:= maxCivilianBuilders)
     (disable-self)
 )
 
@@ -228,8 +251,8 @@
 (defrule
     (up-research-status c: feudal-age == research-pending)
 =>
-    (set-strategic-number sn-food-gatherer-percentage 58)
-    (set-strategic-number sn-wood-gatherer-percentage 34)
+    (set-strategic-number sn-food-gatherer-percentage 61)
+    (set-strategic-number sn-wood-gatherer-percentage 31)
     (set-strategic-number sn-gold-gatherer-percentage 8) ;
     (set-strategic-number sn-stone-gatherer-percentage 0)
     (set-strategic-number sn-maximum-gold-drop-distance 9)
@@ -247,14 +270,14 @@
 (defrule
     (current-age == castle-age)
 =>
-    (set-strategic-number sn-food-gatherer-percentage 60)
-    (set-strategic-number sn-wood-gatherer-percentage 28)
+    (set-strategic-number sn-food-gatherer-percentage 64)
+    (set-strategic-number sn-wood-gatherer-percentage 24)
     (set-strategic-number sn-gold-gatherer-percentage 8)
     (set-strategic-number sn-stone-gatherer-percentage 4)
     (set-strategic-number sn-maximum-stone-drop-distance 9)
-    (chat-local-to-self "STONE MINING AVAILABLE????")
-    (up-chat-data-to-self "WOOD GATHER PERCENT: %d : %d" s: sn-wood-gatherer-percentage)
-    (up-chat-data-to-self "FOOD GATHER PERCENT: %d : %d" s: sn-food-gatherer-percentage)  
+    ;(chat-local-to-self "STONE MINING AVAILABLE????")
+    ;(up-chat-data-to-self "WOOD GATHER PERCENT: %d : %d" s: sn-wood-gatherer-percentage)
+    ;(up-chat-data-to-self "FOOD GATHER PERCENT: %d : %d" s: sn-food-gatherer-percentage)  
     (disable-self)
 )
 
@@ -296,8 +319,8 @@
     (set-strategic-number sn-gold-gatherer-percentage 6)
     (set-strategic-number sn-stone-gatherer-percentage 14)
     (chat-local-to-self "Imperial Age & Infantry Spam - Sending Less Villagers For Wood")
-    (up-chat-data-to-self "WOOD GATHER PERCENT: %d" s: sn-wood-gatherer-percentage)
-    (up-chat-data-to-self "FOOD GATHER PERCENT: %d" s: sn-food-gatherer-percentage)  
+    ;(up-chat-data-to-self "WOOD GATHER PERCENT: %d" s: sn-wood-gatherer-percentage)
+    ;(up-chat-data-to-self "FOOD GATHER PERCENT: %d" s: sn-food-gatherer-percentage)  
     (disable-self)
 )
 
