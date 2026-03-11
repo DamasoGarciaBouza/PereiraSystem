@@ -303,3 +303,52 @@
   (up-chat-data-to-player my-player-number "MINUTES UNTIL FIRST ATTACK: %d" g: minutesUntilFirstAttack)
   (disable-self)
 )
+
+; WARNING BEFORE FIRST ATTACK (approximate, before random part)
+(defrule
+    (map-size tiny)
+    (game-time >= 480)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
+
+(defrule
+    (map-size small)
+    (game-time >= 696)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
+
+(defrule
+    (map-size medium)
+    (game-time >= 912)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
+
+(defrule
+    (map-size normal)
+    (game-time >= 1200)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
+
+(defrule
+    (map-size large)
+    (game-time >= 1320)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
+
+(defrule
+    (map-size giant)
+    (game-time >= 1320)
+=>
+    (chat-to-player my-player-number "ATTACK INCOMING IN APPROXIMATELY 10 MINUTES")
+    (disable-self)
+)
